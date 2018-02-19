@@ -15,12 +15,41 @@
         "level": "alpha",
         "patch": 0
       }
-    }
+    },
+    "timestamp": "2018-02-20T09:59:21+11:00"
   },
   "software": {
     "base": {
+      "name": "wiki_js",
+      "framework": "node6.9",
       "deployment_type": "web",
-      "http_protocol": "https_and_http"
-    }
+      "http_protocol": "https_and_http",
+      "memory": {
+        "required": 366,
+        "recommended": 512
+      }
+    },
+    "scripts": {
+      "start": {
+        "language": "sh",
+        "content": "#/bin/bash\r\n\r\n\r\nnode wiki start &\r\nstartup_complete\r\nwait\r\nexit_code=$?\r\n\r\nshutdown_complete"
+      },
+      "install": {
+        "language": "sh",
+        "content": "#!/bin/bash\r\nnpm install wiki.js@latest"
+      }
+    },
+    "service_configurations": [
+      {
+        "publisher_namespace": "EnginesSystem",
+        "type_path": "database/nosql/mongo",
+        "variables": {
+          "db_password": "_Engines_System(random(10))",
+          "db_username": "_Engines_Builder(engine_name) ",
+          "database_name": "_Engines_Builder(engine_name)",
+          "database_host": "_Engines_System(mongo_host)"
+        }
+      }
+    ]
   }
 }
